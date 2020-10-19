@@ -3,12 +3,18 @@ FROM quay.io/eclipse/che-sidecar-java:8
 ENV HOME=/home/theia
 ENV VERSION=1.6.0
 
-RUN mkdir -p ${HOME}/.daml
+RUN mkdir -p ${HOME}/.daml && addgroup -S theia && adduser -S theia -G theia && \
+    chown -R theia:theia ${HOME} && \
+    echo 'hosts: files dns' > /etc/nsswitch.conf 
 
-RUN echo 'hosts: files dns' > /etc/nsswitch.conf && \
-    curl https://get.daml.com | sh -s $VERSION \
-    && printf "auto-install: false\nupdate-check: never\n" >> ${HOME}/.daml/daml-config.yaml && \
-    for f in "/home/theia"; do \
+USER theia
+
+RUN cd ${HOME} && curl https://get.daml.com | sh -s $VERSION \
+    && printf "auto-install: false\nupdate-check: never\n" >> ${HOME}/.daml/daml-config.yaml
+    
+USER root
+
+RUN  for f in "/home/theia"; do \
       echo "Changing permissions on ${f}" && chgrp -R 0 ${f} && \
       chmod -R g+rwX ${f}; \
     done 
