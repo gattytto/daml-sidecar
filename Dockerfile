@@ -18,5 +18,7 @@ RUN  for f in "/home/theia"; do \
       echo "Changing permissions on ${f}" && chgrp -R 0 ${f} && \
       chmod -R g+rwX ${f}; \
     done 
-    
+
+ADD etc/entrypoint.sh /entrypoint.sh
+
 ENV PATH="${HOME}/.daml/bin:${PATH}"
