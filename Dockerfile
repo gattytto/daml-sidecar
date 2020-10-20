@@ -6,7 +6,7 @@ ENV VERSION=1.6.0
 RUN mkdir -p ${HOME}/.daml && addgroup -S user && adduser -S user -G user && \
     chown -R user:user ${HOME} && \
     echo 'hosts: files dns' > /etc/nsswitch.conf  && \
-    apk update && apk add curl bash tput
+    apk update && apk add curl bash ncurses
 
 USER user
 
