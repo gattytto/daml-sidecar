@@ -2,6 +2,7 @@ FROM quay.io/eclipse/che-sidecar-java:8
 
 ENV HOME=/home/theia
 ENV VERSION=1.6.0
+ENV PATH="${HOME}/.daml/bin:${PATH}"
 
 RUN mkdir -p ${HOME}/.daml && addgroup -S user && adduser -S user -G user && \
     chown -R user:user ${HOME} && \
@@ -22,5 +23,3 @@ RUN  for f in "/home/theia"; do \
     done 
 
 ADD etc/entrypoint.sh /entrypoint.sh
-
-ENV PATH="${HOME}/.daml/bin:${PATH}"
