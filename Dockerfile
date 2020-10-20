@@ -2,6 +2,7 @@ FROM quay.io/eclipse/che-sidecar-java:8
 
 ENV HOME=/home/theia
 ENV VERSION=1.6.0
+ENV SDK=0.13.12
 
 RUN mkdir -p ${HOME}/.daml && addgroup -S user && adduser -S user -G user && \
     chown -R user:user ${HOME} && \
@@ -11,7 +12,8 @@ RUN mkdir -p ${HOME}/.daml && addgroup -S user && adduser -S user -G user && \
 USER user
 
 RUN cd ${HOME} && curl https://get.daml.com | sh -s $VERSION \
-    && printf "auto-install: false\nupdate-check: never\n" >> ${HOME}/.daml/daml-config.yaml
+    && printf "auto-install: false\nupdate-check: never\n" >> ${HOME}/.daml/daml-config.yaml && \
+    daml install ${SDK}
     
 USER root
 
