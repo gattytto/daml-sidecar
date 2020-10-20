@@ -12,8 +12,7 @@ RUN mkdir -p ${HOME}/.daml && addgroup -S user && adduser -S user -G user && \
 USER user
 
 RUN cd ${HOME} && curl https://get.daml.com | sh -s $VERSION \
-    && printf "auto-install: false\nupdate-check: never\n" >> ${HOME}/.daml/daml-config.yaml && \
-    daml install ${VERSION}
+    && printf "auto-install: false\nupdate-check: never\n" >> ${HOME}/.daml/daml-config.yaml
     
 USER root
 
