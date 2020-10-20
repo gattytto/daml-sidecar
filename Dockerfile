@@ -5,7 +5,8 @@ ENV VERSION=1.6.0
 
 RUN mkdir -p ${HOME}/.daml && addgroup -S theia && adduser -S theia -G theia && \
     chown -R theia:theia ${HOME} && \
-    echo 'hosts: files dns' > /etc/nsswitch.conf 
+    echo 'hosts: files dns' > /etc/nsswitch.conf  && \
+    apk update && apk add curl bash
 
 USER theia
 
